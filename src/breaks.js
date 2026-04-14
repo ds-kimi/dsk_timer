@@ -1,7 +1,6 @@
 const { notifyBreakStart, notifyBreakOver } = require("./breaksNotify");
+const config = require("./config");
 
-const WORK_BEFORE_BREAK = 1800;
-const BREAK_DURATION = 300;
 let breakStart = null;
 let breakNotified = false;
 let mainWin = null;
@@ -10,7 +9,8 @@ function init(win) { mainWin = win; }
 
 function getRemaining() {
   if (!breakStart) return 0;
-  return Math.max(0, Math.ceil(BREAK_DURATION - (Date.now() - breakStart) / 1000));
+  const dur = config.load().breakDuration * 60;
+  return Math.max(0, Math.ceil(dur - (Date.now() - breakStart) / 1000));
 }
 
 function startBreak() {
@@ -29,5 +29,9 @@ module.exports = {
     breakNotified = true;
     notifyBreakOver(mainWin);
   },
-  getStatus: () => ({ onBreak: !!breakStart, remaining: getRemaining(), workLimit: WORK_BEFORE_BREAK }),
+  getStatus: () => ({
+    onBreak: !!breakStart,
+    remaining: getRemaining(),
+    workLimit: config.load().workBeforeBreak * 60,
+  }),
 };

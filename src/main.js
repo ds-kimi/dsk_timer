@@ -3,6 +3,7 @@ const path = require("path");
 const timer = require("./timer");
 const alerts = require("./alerts");
 const breaks = require("./breaks");
+const config = require("./config");
 
 const IS_DEV = process.argv.includes("--dev");
 let mainWindow = null;
@@ -52,6 +53,8 @@ function registerIPC() {
   ipcMain.handle("timer:status", () => timer.getStatus());
   ipcMain.handle("timer:speed", (_, mult) => timer.setSpeed(mult));
   ipcMain.handle("break:status", () => breaks.getStatus());
+  ipcMain.handle("config:load", () => config.load());
+  ipcMain.handle("config:save", (_, cfg) => config.save(cfg));
   ipcMain.handle("app:isDev", () => IS_DEV);
   ipcMain.handle("win:minimize", () => mainWindow.hide());
   ipcMain.handle("win:close", () => mainWindow.hide());

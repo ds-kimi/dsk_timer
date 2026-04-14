@@ -1,4 +1,4 @@
-const $ = (sel) => document.querySelector(sel);
+window.$ = (sel) => document.querySelector(sel);
 let pollInterval = null;
 
 async function updateUI() {
@@ -36,4 +36,7 @@ async function stopMode() {
   await updateUI();
 }
 
+window.startMode = startMode;
+window.stopMode = stopMode;
+window.updateUI = updateUI;
 window.polling = { start: () => { pollInterval = setInterval(updateUI, 1000); updateUI(); } };

@@ -6,6 +6,8 @@ contextBridge.exposeInMainWorld("timerAPI", {
   getStatus: () => ipcRenderer.invoke("timer:status"),
   setSpeed: (m) => ipcRenderer.invoke("timer:speed", m),
   breakStatus: () => ipcRenderer.invoke("break:status"),
+  loadConfig: () => ipcRenderer.invoke("config:load"),
+  saveConfig: (c) => ipcRenderer.invoke("config:save", c),
   isDev: () => ipcRenderer.invoke("app:isDev"),
   minimize: () => ipcRenderer.invoke("win:minimize"),
   close: () => ipcRenderer.invoke("win:close"),

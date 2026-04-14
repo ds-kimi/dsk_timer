@@ -11,6 +11,7 @@
     <div id="titlebar">
       <span class="title">DSK Timer</span>
       <div class="titlebar-btns">
+        <button id="btn-settings" class="tb-btn">&#x2699;</button>
         <button id="btn-minimize" class="tb-btn">&#x2013;</button>
         <button id="btn-close" class="tb-btn close">&#x2715;</button>
       </div>
@@ -52,9 +53,48 @@
     </div>
   </div>
 
+    <div id="settings-panel" class="settings-panel" hidden>
+      <div class="settings-header">
+        <span class="settings-title">Settings</span>
+        <button id="btn-settings-close" class="tb-btn">&#x2715;</button>
+      </div>
+      <div class="settings-body">
+        <label class="setting-row">
+          <span class="setting-label">Fun per session</span>
+          <div class="setting-input">
+            <input type="number" id="cfg-fun-session" min="1" max="480" />
+            <span class="setting-unit">min</span>
+          </div>
+        </label>
+        <label class="setting-row">
+          <span class="setting-label">Fun per day</span>
+          <div class="setting-input">
+            <input type="number" id="cfg-fun-daily" min="1" max="1440" />
+            <span class="setting-unit">min</span>
+          </div>
+        </label>
+        <label class="setting-row">
+          <span class="setting-label">Work before break</span>
+          <div class="setting-input">
+            <input type="number" id="cfg-work-before" min="1" max="480" />
+            <span class="setting-unit">min</span>
+          </div>
+        </label>
+        <label class="setting-row">
+          <span class="setting-label">Break duration</span>
+          <div class="setting-input">
+            <input type="number" id="cfg-break-dur" min="1" max="60" />
+            <span class="setting-unit">min</span>
+          </div>
+        </label>
+      </div>
+      <button id="btn-settings-save" class="settings-save">Save</button>
+    </div>
+
   <script src="format.js"></script>
   <script src="sounds.js"></script>
   <script src="breakui.js"></script>
+  <script src="settings.js"></script>
   <script src="app.js"></script>
   <script src="events.js"></script>
 </body>

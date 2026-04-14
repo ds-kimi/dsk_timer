@@ -5,21 +5,20 @@
 }
 
 :root {
-  --bg: #0f0f14;
-  --surface: #1a1a24;
-  --border: #2a2a3a;
-  --text: #e4e4ef;
-  --text-dim: #7a7a92;
-  --work: #22c55e;
-  --work-glow: rgba(34, 197, 94, 0.25);
-  --fun: #a855f7;
-  --fun-glow: rgba(168, 85, 247, 0.25);
-  --danger: #ef4444;
-  --radius: 14px;
+  --bg: #111113;
+  --surface: #19191d;
+  --border: #27272d;
+  --text: #dcdce0;
+  --text-dim: #68686f;
+  --work: #b0b0b6;
+  --fun: #8e8e96;
+  --accent: #c4c4ca;
+  --danger: #a04040;
+  --radius: 10px;
 }
 
 body {
-  font-family: "Segoe UI", system-ui, sans-serif;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
   background: transparent;
   color: var(--text);
   user-select: none;
@@ -27,314 +26,396 @@ body {
 }
 
 #app {
+  position: relative;
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 14px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 28px 24px;
+  padding: 0 24px 20px;
 }
 
 /* ── Titlebar ── */
 #titlebar {
-  width: calc(100% + 56px);
+  width: calc(100% + 48px);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
+  padding: 8px 14px;
   -webkit-app-region: drag;
 }
 
 .title {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   color: var(--text-dim);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
 
 .titlebar-btns {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   -webkit-app-region: no-drag;
 }
 
 .tb-btn {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border: none;
-  border-radius: 8px;
-  background: var(--surface);
+  border-radius: 6px;
+  background: transparent;
   color: var(--text-dim);
-  font-size: 13px;
+  font-size: 12px;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
 
-.tb-btn:hover { background: var(--border); }
+.tb-btn:hover { background: var(--border); color: var(--text); }
 .tb-btn.close:hover { background: var(--danger); color: #fff; }
 
 /* ── Status Badge ── */
 #status-badge {
-  margin-top: 16px;
+  margin-top: 20px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 18px;
-  border-radius: 20px;
+  gap: 7px;
+  padding: 5px 14px;
+  border-radius: 16px;
   background: var(--surface);
-  border: 1px solid var(--border);
 }
 
 #status-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--text-dim);
-  transition: background 0.3s, box-shadow 0.3s;
+  transition: background 0.3s;
 }
 
 #status-text {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--text-dim);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   transition: color 0.3s;
 }
 
 /* ── Timer Display ── */
 #timer-display {
-  margin-top: 32px;
-  margin-bottom: 32px;
+  margin-top: 36px;
+  margin-bottom: 36px;
 }
 
 #timer-value {
-  font-size: 56px;
-  font-weight: 700;
-  letter-spacing: 2px;
+  font-size: 54px;
+  font-weight: 300;
+  letter-spacing: 4px;
   font-variant-numeric: tabular-nums;
-  background: linear-gradient(135deg, var(--text), var(--text-dim));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: all 0.4s;
+  color: var(--text);
+  transition: color 0.3s;
 }
 
 /* ── Mode Buttons ── */
 #mode-buttons {
   display: flex;
-  gap: 14px;
+  gap: 10px;
   width: 100%;
 }
 
 .mode-btn {
   flex: 1;
-  padding: 14px 0;
-  border: 2px solid var(--border);
+  padding: 11px 0;
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
-  color: var(--text);
-  font-size: 15px;
-  font-weight: 600;
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  letter-spacing: 0.3px;
+  transition: all 0.15s;
 }
 
-.mode-btn.work:hover,
-.mode-btn.work.active {
-  border-color: var(--work);
-  background: var(--work-glow);
-  color: var(--work);
-  box-shadow: 0 0 20px var(--work-glow);
+.mode-btn:hover {
+  background: var(--border);
+  color: var(--text);
 }
 
-.mode-btn.fun:hover,
-.mode-btn.fun.active {
-  border-color: var(--fun);
-  background: var(--fun-glow);
-  color: var(--fun);
-  box-shadow: 0 0 20px var(--fun-glow);
+.mode-btn.active {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
 }
 
 .mode-btn:disabled {
-  opacity: 0.4;
   cursor: default;
-  box-shadow: none;
+}
+
+.mode-btn:disabled:not(.active) {
+  opacity: 0.3;
 }
 
 /* ── Stop Button ── */
 .stop-btn {
-  margin-top: 14px;
+  margin-top: 10px;
   width: 100%;
-  padding: 12px 0;
-  border: 2px solid var(--border);
+  padding: 10px 0;
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--surface);
+  background: transparent;
   color: var(--text-dim);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  letter-spacing: 0.3px;
+  transition: all 0.15s;
 }
 
 .stop-btn:hover:not(:disabled) {
   border-color: var(--danger);
   color: var(--danger);
-  background: rgba(239, 68, 68, 0.1);
 }
 
 .stop-btn:disabled {
-  opacity: 0.3;
+  opacity: 0.2;
   cursor: default;
 }
 
 /* ── Dev Speed Button ── */
 .speed-btn {
-  margin-top: 10px;
+  margin-top: 8px;
   width: 100%;
-  padding: 10px 0;
-  border: 2px dashed #f59e0b;
+  padding: 8px 0;
+  border: 1px dashed var(--border);
   border-radius: var(--radius);
-  background: rgba(245, 158, 11, 0.08);
-  color: #f59e0b;
-  font-size: 13px;
-  font-weight: 600;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
-  letter-spacing: 0.3px;
+  transition: all 0.15s;
 }
 
 .speed-btn:active {
-  background: rgba(245, 158, 11, 0.25);
-  box-shadow: 0 0 16px rgba(245, 158, 11, 0.3);
-  border-style: solid;
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--text-dim);
 }
 
 .speed-btn[hidden] { display: none; }
 
 /* ── Break Panel ── */
 .break-panel {
-  margin-top: 16px;
+  flex: 1;
   width: 100%;
-  padding: 20px;
+  margin: 8px 0 12px;
+  padding: 24px;
   border-radius: var(--radius);
   background: var(--surface);
-  border: 2px solid #3b82f6;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  box-shadow: 0 0 24px rgba(59, 130, 246, 0.15);
 }
 
 .break-panel[hidden] { display: none; }
 
-.break-icon { font-size: 28px; }
+#timer-display[hidden],
+#mode-buttons[hidden],
+#btn-stop[hidden] { display: none; }
+
+.break-icon {
+  font-size: 28px;
+  opacity: 0.7;
+}
 
 .break-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #60a5fa;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .break-countdown {
-  font-size: 36px;
-  font-weight: 700;
+  font-size: 48px;
+  font-weight: 300;
   font-variant-numeric: tabular-nums;
-  color: #93c5fd;
+  color: var(--text);
+  letter-spacing: 4px;
 }
 
 .break-hint {
   font-size: 12px;
   color: var(--text-dim);
+  margin-top: 2px;
 }
 
 /* ── Stats Cards ── */
 #stats {
   margin-top: auto;
   display: flex;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
 }
 
 .stat-card {
   flex: 1;
-  padding: 16px;
+  padding: 14px;
   border-radius: var(--radius);
   background: var(--surface);
-  border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  transition: border-color 0.3s;
+  gap: 4px;
 }
 
-.work-card { border-left: 3px solid var(--work); }
-.fun-card { border-left: 3px solid var(--fun); }
-
 .stat-label {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
   color: var(--text-dim);
   text-transform: uppercase;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.8px;
 }
 
 .stat-value {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 400;
   font-variant-numeric: tabular-nums;
+  color: var(--text);
 }
 
-.work-card .stat-value { color: var(--work); }
-.fun-card .stat-value { color: var(--fun); }
-
-/* ── Active state animations ── */
-body.mode-work #status-dot {
-  background: var(--work);
-  box-shadow: 0 0 8px var(--work);
-}
-body.mode-work #status-text { color: var(--work); }
-body.mode-work #timer-value {
-  background: linear-gradient(135deg, var(--work), #86efac);
-  -webkit-background-clip: text;
+/* ── Settings Panel ── */
+.settings-panel {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px 20px;
+  z-index: 10;
 }
 
-body.mode-fun #status-dot {
-  background: var(--fun);
-  box-shadow: 0 0 8px var(--fun);
-}
-body.mode-fun #status-text { color: var(--fun); }
-body.mode-fun #timer-value {
-  background: linear-gradient(135deg, var(--fun), #d8b4fe);
-  -webkit-background-clip: text;
+.settings-panel[hidden] { display: none; }
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
 }
 
-body.mode-break #status-dot {
-  background: #3b82f6;
-  box-shadow: 0 0 8px #3b82f6;
-}
-body.mode-break #status-text { color: #60a5fa; }
-body.mode-break #timer-value {
-  background: linear-gradient(135deg, #3b82f6, #93c5fd);
-  -webkit-background-clip: text;
+.settings-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
 }
 
-/* Pulse animation for active dot */
+.settings-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.setting-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.setting-input {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.setting-input input {
+  width: 64px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  font-family: inherit;
+  text-align: right;
+  outline: none;
+  transition: border-color 0.15s;
+  -moz-appearance: textfield;
+}
+
+.setting-input input::-webkit-inner-spin-button,
+.setting-input input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.setting-input input:focus {
+  border-color: var(--text-dim);
+}
+
+.setting-unit {
+  font-size: 11px;
+  color: var(--text-dim);
+  min-width: 24px;
+}
+
+.settings-save {
+  margin-top: auto;
+  width: 100%;
+  padding: 11px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--text);
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: opacity 0.15s;
+}
+
+.settings-save:hover { opacity: 0.85; }
+
+/* ── Active states — subtle, no glow ── */
+body.mode-work #status-dot { background: var(--text); }
+body.mode-work #status-text { color: var(--text); }
+
+body.mode-fun #status-dot { background: var(--text-dim); }
+body.mode-fun #status-text { color: var(--accent); }
+
+body.mode-break #status-dot { background: var(--text-dim); }
+body.mode-break #status-text { color: var(--text-dim); }
+
 @keyframes pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.35; }
 }
 body.mode-work #status-dot,
 body.mode-fun #status-dot,
 body.mode-break #status-dot {
-  animation: pulse 2s ease-in-out infinite;
+  animation: pulse 2.5s ease-in-out infinite;
 }
 
-/* Alert flash overlay */
+/* Alert flash — subtle red tint */
 @keyframes flash {
-  0%, 100% { background: transparent; }
-  25%, 75% { background: rgba(239, 68, 68, 0.12); }
+  0%, 100% { box-shadow: inset 0 0 0 transparent; }
+  30%, 70% { box-shadow: inset 0 0 40px rgba(160, 64, 64, 0.08); }
 }
 body.alert-flash #app {
-  animation: flash 1s ease;
+  animation: flash 0.8s ease;
 }

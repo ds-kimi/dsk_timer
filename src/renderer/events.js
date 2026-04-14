@@ -1,8 +1,11 @@
-const $ = (sel) => document.querySelector(sel);
-
 // Titlebar
+$("#btn-settings").addEventListener("click", () => window.settingsUI.open());
 $("#btn-minimize").addEventListener("click", () => window.timerAPI.minimize());
 $("#btn-close").addEventListener("click", () => window.timerAPI.close());
+
+// Settings
+$("#btn-settings-close").addEventListener("click", () => window.settingsUI.close());
+$("#btn-settings-save").addEventListener("click", () => window.settingsUI.save());
 
 // Mode buttons
 $("#btn-work").addEventListener("click", () => startMode("work"));

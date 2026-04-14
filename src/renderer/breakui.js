@@ -1,20 +1,26 @@
-const $ = (sel) => document.querySelector(sel);
 let breakInterval = null;
 
+let speedWasVisible = false;
+
 function showBreakPanel() {
+  speedWasVisible = !$("#btn-speed").hidden;
   $("#break-panel").hidden = false;
+  $("#timer-display").hidden = true;
+  $("#mode-buttons").hidden = true;
+  $("#btn-stop").hidden = true;
+  $("#btn-speed").hidden = true;
   document.body.className = "mode-break";
   $("#status-text").textContent = "On Break";
-  $("#btn-work").disabled = true;
-  $("#btn-fun").disabled = false;
-  $("#btn-stop").disabled = true;
-  $("#timer-value").textContent = "00:00:00";
   $("#break-hint").textContent = "Relax, you earned it";
   startCountdown();
 }
 
 function hideBreakPanel() {
   $("#break-panel").hidden = true;
+  $("#timer-display").hidden = false;
+  $("#mode-buttons").hidden = false;
+  $("#btn-stop").hidden = false;
+  if (speedWasVisible) $("#btn-speed").hidden = false;
   if (breakInterval) { clearInterval(breakInterval); breakInterval = null; }
 }
 
