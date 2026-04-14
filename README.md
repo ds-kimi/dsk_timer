@@ -6,14 +6,17 @@
 
 <p align="center">
   <strong>Desktop work &amp; fun timer for Windows</strong><br>
-  <sub>Frameless window · tray · local data only · optional floating overlay</sub>
+  <sub>System tray · data stays on your device · optional floating timer bar</sub>
 </p>
 
 <p align="center">
-  <a href="https://github.com/ds-kimi/dsk_timer/releases"><img src="https://img.shields.io/github/v/release/ds-kimi/dsk_timer?sort=semver&amp;style=for-the-badge&amp;logo=github&amp;label=release" alt="GitHub release"></a>
+  <a href="https://github.com/ds-kimi/dsk_timer/releases"><img src="https://img.shields.io/github/v/release/ds-kimi/dsk_timer?sort=semver&amp;style=for-the-badge&amp;logo=github&amp;label=download" alt="Latest release"></a>
   <a href="https://github.com/ds-kimi/dsk_timer"><img src="https://img.shields.io/github/stars/ds-kimi/dsk_timer?style=for-the-badge&amp;logo=github" alt="GitHub stars"></a>
   <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078D6?style=for-the-badge&amp;logo=windows&amp;logoColor=white" alt="Windows">
-  <a href="https://www.electronjs.org/"><img src="https://img.shields.io/badge/Electron-33-47848F?style=for-the-badge&amp;logo=electron&amp;logoColor=white" alt="Electron"></a>
+</p>
+
+<p align="center">
+  <b>Looking for the installer?</b> Open <a href="https://github.com/ds-kimi/dsk_timer/releases">Releases</a> and download the latest <code>DSK Timer Setup … .exe</code>.
 </p>
 
 <br>
@@ -24,21 +27,21 @@
   <tr>
     <td width="50%" align="center">
       <a href="assets/main_ui.png"><img src="assets/main_ui.png" alt="Main timer window"></a>
-      <p align="center"><sub><b>Main</b> — work / fun session, elapsed time, today’s totals</sub></p>
+      <p align="center"><sub><b>Main</b> — work or fun session, elapsed time, today’s totals</sub></p>
     </td>
     <td width="50%" align="center">
       <a href="assets/stats.png"><img src="assets/stats.png" alt="Activity and statistics"></a>
-      <p align="center"><sub><b>Activity</b> — work vs fun by day (week / month / year)</sub></p>
+      <p align="center"><sub><b>Activity</b> — work vs fun by day (week, month, or year)</sub></p>
     </td>
   </tr>
   <tr>
     <td width="50%" align="center">
-      <a href="assets/break_time.png"><img src="assets/break_time.png" alt="Mandatory break countdown"></a>
-      <p align="center"><sub><b>Break</b> — mandatory rest countdown before work resumes</sub></p>
+      <a href="assets/break_time.png"><img src="assets/break_time.png" alt="Break countdown"></a>
+      <p align="center"><sub><b>Break</b> — rest countdown before work can resume</sub></p>
     </td>
     <td width="50%" align="center">
       <a href="assets/overlay.png"><img src="assets/overlay.png" alt="Floating overlay bar"></a>
-      <p align="center"><sub><b>Overlay</b> — always-on-top status and timer</sub></p>
+      <p align="center"><sub><b>Overlay</b> — small bar on top of other windows with status and time</sub></p>
     </td>
   </tr>
 </table>
@@ -47,35 +50,45 @@
 
 ## What it does
 
-- Start **Work** or **Fun**; see elapsed time as `HH:MM:SS` and today’s saved totals.
-- After enough continuous work, a **mandatory break** locks work until the countdown finishes.
-- Optional **fun limits** (per session and per day) trigger Windows notifications and in-app beeps.
-- **Activity** view shows work vs fun per day (week / month / year) and lets you reset history.
+- Start **Work** or **Fun** and track time as **hours : minutes : seconds**, plus today’s running totals.
+- After enough continuous work, a **mandatory break** blocks work until the break timer finishes.
+- Optional **fun limits** (per session and per day) can show Windows notifications and play short beeps in the app.
+- The **Activity** screen shows work vs fun over time and lets you clear history if you want a fresh start.
 
 ---
 
 ## Features
 
-| Area | Behaviour |
-|------|-----------|
-| **Tray** | Close hides the window; the process stays running. Tray menu: Show, Quit. |
-| **Single instance** | Starting the app again focuses the existing window instead of opening a second copy. |
-| **Persistence** | Settings and session history are stored on your PC and persist between launches. |
-| **Idle pause** | Optional: pause the active session when the system has been idle long enough (settings). |
-| **Floating overlay** | Optional small always-on-top bar (status + time). Position is adjusted from Settings (Move / Done). Stays on top of normal windows; exclusive fullscreen (many games) can still cover it. |
-| **Display scaling** | Window and overlay scale up on wide work areas (roughly 1920px baseline, capped) so the UI stays usable on large or 4K-class desktops. |
-| **Alert volume** | Slider 0–100 for in-app beeps; **Test** plays a sample. Windows toast sounds follow system volume. |
-| **Dev** | `npm run dev` enables a speed multiplier control for testing. |
-| **Updates** | Installed builds check GitHub Releases on launch (after a short delay). If a newer version exists, you are asked to download; when the installer is ready, you can restart to apply. Does not run in development (`electron .`). |
+| Area | What you get |
+|------|----------------|
+| **Tray** | Closing the window hides it; the app keeps running. Use the tray icon for **Show** or **Quit**. |
+| **One window** | Opening the app again brings the same window to the front instead of starting a second copy. |
+| **Your data** | Settings and past sessions are saved on your computer and are still there the next time you open the app. |
+| **Idle pause** | Optional: pause the running session automatically after the PC has been idle long enough (configured in Settings). |
+| **Floating bar** | Optional small bar that stays above normal windows with status and time. In Settings, use **Move…** / **Done** to place it. Full-screen apps (many games) may still hide it. |
+| **Large displays** | The interface scales up on big or high-resolution screens so it stays easy to read. |
+| **Sounds** | Volume slider for in-app beeps, with **Test** to preview. Windows notification sounds follow your system volume. |
+| **Updates** | Installed versions can check for a newer release after startup and guide you through installing it. |
+
+---
+
+## Requirements
+
+- **Windows 10 or 11** to run the app.
+- **Node.js** only if you want to run or build the project from source (see below).
 
 ---
 
 ## Development
 
+For contributors or local runs:
+
 ```bash
 npm install
 npm start
 ```
+
+Optional development mode (extra testing controls):
 
 ```bash
 npm run dev
@@ -85,25 +98,16 @@ npm run dev
 
 ## Build installer
 
-Needs Node.js on the build machine.
+From the project folder, with Node.js installed:
 
 ```bash
 npm run build
 ```
 
-Regenerates icons from `assets/clock-minimal.svg`, runs **electron-builder** for Windows (NSIS), then **`scripts/after-pack.js`** uses **rcedit** so the packaged `DSK Timer.exe` carries `assets/icon.ico` (shortcuts and search show your icon, not the default Electron one).
+This creates a Windows installer under `dist\` (for example `DSK Timer Setup <version>.exe`) and sets up desktop and Start Menu shortcuts with the app’s own icon.
 
-Output: `dist\` — e.g. `DSK Timer Setup <version>.exe` (one-click install, desktop and Start Menu shortcuts).
-
-Icons only:
+To regenerate icon files from the vector artwork in `assets`:
 
 ```bash
 npm run icons
 ```
-
----
-
-## Requirements
-
-- **Windows** (installer and shortcuts target Windows)
-- **Node.js** for `npm install`, `npm start`, and `npm run build`
