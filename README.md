@@ -12,6 +12,7 @@
 <p align="center">
   <a href="https://github.com/ds-kimi/dsk_timer/releases"><img src="https://img.shields.io/github/v/release/ds-kimi/dsk_timer?sort=semver&amp;style=for-the-badge&amp;logo=github&amp;label=download" alt="Latest release"></a>
   <a href="https://github.com/ds-kimi/dsk_timer"><img src="https://img.shields.io/github/stars/ds-kimi/dsk_timer?style=for-the-badge&amp;logo=github" alt="GitHub stars"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT License"></a>
   <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078D6?style=for-the-badge&amp;logo=windows&amp;logoColor=white" alt="Windows">
 </p>
 
