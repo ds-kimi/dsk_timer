@@ -1,5 +1,8 @@
 async function openSettings() {
   const cfg = await window.timerAPI.loadConfig();
+  const info = await window.timerAPI.getAppInfo();
+  $("#settings-about").textContent =
+    `App version ${info.version} · ${info.osLine}`;
   $("#cfg-fun-session").value = cfg.funSessionLimit;
   $("#cfg-fun-daily").value = cfg.funDailyLimit;
   $("#cfg-work-before").value = cfg.workBeforeBreak;

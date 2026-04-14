@@ -1,0 +1,29 @@
+name: Feature request
+description: Suggest an improvement or new capability
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: Short requests are fine; context helps decide scope and priority.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or goal
+      description: What are you trying to do that the app does not support today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How you imagine it could work (UI, settings, behavior).
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Optional. Other tools or workarounds you use.
+  - type: input
+    id: version
+    attributes:
+      label: App version & OS (optional)
+      description: If relevant, copy the line above **Save** in **Settings** (version · OS).

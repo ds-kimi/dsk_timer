@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } = require("electron");
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
 
 const ICON_PATH = path.join(__dirname, "..", "assets", "icon.ico");
@@ -12,6 +13,7 @@ const idleWatch = require("./idleWatch");
 const overlayHost = require("./overlayHost");
 const displayScale = require("./displayScale");
 const updater = require("./updater");
+const winOsLine = require("./winOsLine");
 
 if (process.platform === "win32") {
   app.setAppUserModelId("com.dsk.timer");
@@ -104,6 +106,12 @@ function registerIPC() {
   ipcMain.handle("stats:range", (_, s, e) => statsData.getRange(s, e));
   ipcMain.handle("stats:clear", () => statsData.clearAll());
   ipcMain.handle("app:isDev", () => IS_DEV);
+  ipcMain.handle("app:info", () => ({
+    version: app.getVersion(),
+    osLine: process.platform === "win32"
+      ? winOsLine.getLine()
+      : `${process.platform} ${os.release()}`,
+  }));
   ipcMain.handle("app:uiScale", () => displayScale.getUiScale());
   ipcMain.handle("win:minimize", () => {
     timer.persistNow();

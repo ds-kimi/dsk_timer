@@ -11,6 +11,7 @@ contextBridge.exposeInMainWorld("timerAPI", {
   statsRange: (s, e) => ipcRenderer.invoke("stats:range", s, e),
   statsClear: () => ipcRenderer.invoke("stats:clear"),
   isDev: () => ipcRenderer.invoke("app:isDev"),
+  getAppInfo: () => ipcRenderer.invoke("app:info"),
   minimize: () => ipcRenderer.invoke("win:minimize"),
   close: () => ipcRenderer.invoke("win:close"),
   overlaySetMoveMode: (on) => ipcRenderer.invoke("overlay:setMoveMode", on),

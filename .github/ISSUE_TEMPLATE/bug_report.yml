@@ -1,0 +1,35 @@
+name: Bug report
+description: Report incorrect behavior or a crash
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Please include enough detail so the problem can be reproduced.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What went wrong?
+      description: What you expected vs what happened.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the app …
+        2. Click …
+        3. …
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: App version & OS
+      description: Open **Settings** — copy the centered line above **Save** (version and OS in one line), or type them manually.
+      placeholder: e.g. App version 1.0.4 · Windows …
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots / logs
+      description: Optional. Attach images or paste errors from DevTools if relevant.
