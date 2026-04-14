@@ -4,4 +4,5 @@ module.exports = {
   speedMultiplier: 1,
   lastSpeedChange: null,
   accumulatedElapsed: 0,
+  sessionPaused: false,
 };

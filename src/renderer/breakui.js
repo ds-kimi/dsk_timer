@@ -10,7 +10,7 @@ function showBreakPanel() {
   $("#btn-stop").hidden = true;
   $("#btn-speed").hidden = true;
   document.body.className = "mode-break";
-  $("#status-text").textContent = "On Break";
+  $("#status-text").textContent = "On break";
   $("#break-hint").textContent = "Relax, you earned it";
   startCountdown();
 }
@@ -39,4 +39,15 @@ async function startCountdown() {
   }, 1000);
 }
 
-window.breakUI = { showBreakPanel, hideBreakPanel };
+function setCountdownPaused(paused) {
+  if (paused) {
+    if (breakInterval) {
+      clearInterval(breakInterval);
+      breakInterval = null;
+    }
+  } else if (!$("#break-panel").hidden) {
+    startCountdown();
+  }
+}
+
+window.breakUI = { showBreakPanel, hideBreakPanel, setCountdownPaused };

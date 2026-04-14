@@ -94,7 +94,38 @@
             <span class="setting-unit">min</span>
           </div>
         </label>
+        <label class="setting-row" title="Pause the timer (work or fun) when the whole system has had no mouse or keyboard input for this long; resumes when you return (0 = off)">
+          <span class="setting-label">Pause after idle</span>
+          <div class="setting-input">
+            <input type="number" id="cfg-idle-stop" min="0" max="3600" />
+            <span class="setting-unit">sec</span>
+          </div>
+        </label>
+        <label class="setting-row" title="Loudness of in-app alert beeps (breaks, limits). 0 = silent. Windows toast sounds use system volume.">
+          <span class="setting-label">Alert volume</span>
+          <div class="setting-input setting-volume">
+            <button type="button" id="btn-test-alert" class="settings-text-btn settings-test-sound-btn" title="Play a sample beep at the current slider level">Test</button>
+            <div class="setting-volume-track">
+              <input type="range" id="cfg-notify-vol" min="0" max="100" step="1" />
+            </div>
+            <span id="cfg-notify-vol-val" class="setting-unit setting-vol-pct">100</span>
+          </div>
+        </label>
         <div class="setting-divider"></div>
+        <label class="setting-row" title="Small always-on-top bar (status and time). May not show above exclusive fullscreen apps.">
+          <span class="setting-label">Floating overlay</span>
+          <div class="toggle-wrap">
+            <input type="checkbox" id="cfg-overlay" class="toggle-input" />
+            <span class="toggle-track"></span>
+          </div>
+        </label>
+        <div class="setting-row" title="Drag the overlay, then click Done moving here">
+          <span class="setting-label">Overlay position</span>
+          <div class="setting-actions">
+            <button type="button" id="btn-overlay-move" class="settings-text-btn">Move…</button>
+            <button type="button" id="btn-overlay-done" class="settings-text-btn" hidden>Done moving</button>
+          </div>
+        </div>
         <label class="setting-row" title="Start DSK Timer when Windows logs in">
           <span class="setting-label">Launch on startup</span>
           <div class="toggle-wrap">
@@ -160,16 +191,7 @@
   <script src="sounds.js"></script>
   <script src="breakui.js"></script>
   <script src="settings.js"></script>
-  <script src="chartSeparators.js"></script>
-  <script src="chartBarAnim.js"></script>
-  <script src="chart.js"></script>
-  <script src="chartHit.js"></script>
-  <script src="dateRangeClip.js"></script>
-  <script src="statsDrill.js"></script>
-  <script src="chartTooltip.js"></script>
-  <script src="statsSummary.js"></script>
-  <script src="statsNavUi.js"></script>
-  <script src="statsPanel.js"></script>
+  <script src="statsLoader.js"></script>
   <script src="app.js"></script>
   <script src="events.js"></script>
 </body>

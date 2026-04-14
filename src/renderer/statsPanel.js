@@ -51,12 +51,22 @@ window.statsNavWire = (dir) => {
 };
 
 async function openStats() {
+  if (window.loadStatsCharts) await window.loadStatsCharts();
   $("#stats-panel").classList.add("stats-open");
   await refreshChart({ chartAnim: true });
 }
 
 function closeStats() {
   window.statsDrill.reset();
+  const canvas = document.getElementById("stats-canvas");
+  if (canvas && window.__statsChartsLoaded && window.chartBarAnim) {
+    window.chartBarAnim.cancel(canvas);
+    canvas._chartLayout = null;
+    const ctx = canvas.getContext("2d");
+    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.width = 1;
+    canvas.height = 1;
+  }
   $("#stats-panel").classList.remove("stats-open");
   $("#reset-confirm").hidden = true;
 }

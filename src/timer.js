@@ -1,6 +1,7 @@
 const fields = require("./sessionFields");
 const storage = require("./storage");
 const checkpoint = require("./timerCheckpoint");
+const timerPause = require("./timerPause");
 const { elapsed } = require("./timerMath");
 
 function startSession(mode) {
@@ -10,6 +11,7 @@ function startSession(mode) {
   fields.lastSpeedChange = Date.now();
   fields.accumulatedElapsed = 0;
   fields.speedMultiplier = 1;
+  fields.sessionPaused = false;
   checkpoint.onStart();
   return { mode, startTime: fields.sessionStart };
 }
@@ -31,6 +33,7 @@ function stopSession() {
   fields.sessionStart = null;
   fields.speedMultiplier = 1;
   fields.accumulatedElapsed = 0;
+  fields.sessionPaused = false;
   return result;
 }
 
@@ -38,6 +41,7 @@ function getStatus() {
   return {
     mode: fields.currentMode,
     elapsed: elapsed(fields),
+    paused: fields.sessionPaused,
     totals: storage.getTodayTotals(),
   };
 }
@@ -47,6 +51,8 @@ module.exports = {
   stopSession,
   getStatus,
   setSpeed,
+  pauseSession: timerPause.pause,
+  resumeSession: timerPause.resume,
   persistNow: checkpoint.persistNow,
   restoreFromDisk: checkpoint.restoreFromDisk,
 };

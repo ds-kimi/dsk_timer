@@ -2,15 +2,26 @@ const timer = require("./timer");
 const breaks = require("./breaks");
 const { checkFunLimits } = require("./alertsFun");
 
-let interval = null;
+let timeoutId = null;
 let breakAlerted = false;
 
+function tick(mainWindow) {
+  check(mainWindow);
+  const st = timer.getStatus();
+  const delay = st.mode || breaks.getStatus().onBreak ? 1000 : 5000;
+  timeoutId = setTimeout(() => tick(mainWindow), delay);
+}
+
 function start(mainWindow) {
-  interval = setInterval(() => check(mainWindow), 1000);
+  if (timeoutId) clearTimeout(timeoutId);
+  tick(mainWindow);
 }
 
 function stop() {
-  if (interval) { clearInterval(interval); interval = null; }
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+    timeoutId = null;
+  }
 }
 
 function resetFlags() {

@@ -299,11 +299,12 @@ body {
 .overlay-panel {
   position: absolute;
   inset: 0;
+  min-height: 0;
   background: var(--bg);
   border-radius: 14px;
   display: flex;
   flex-direction: column;
-  padding: 0 24px 20px;
+  padding: 0 24px 16px;
   z-index: 10;
 }
 
@@ -329,7 +330,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
+  padding: 10px 0 6px;
+  flex-shrink: 0;
 }
 
 .overlay-title {
@@ -341,7 +343,8 @@ body {
 }
 
 .overlay-action-btn {
-  margin-top: auto;
+  flex-shrink: 0;
+  margin-top: 12px;
   width: 100%;
   padding: 11px 0;
   border: 1px solid var(--border);
@@ -360,10 +363,13 @@ body {
 /* ── Settings Body ── */
 .settings-body {
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
+  gap: 12px;
+  margin-top: 2px;
+  padding-bottom: 8px;
 }
 
 .setting-row {
@@ -376,6 +382,69 @@ body {
   font-size: 13px;
   font-weight: 400;
   color: var(--text);
+}
+
+.setting-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-text-btn {
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.settings-text-btn:hover:not(:disabled) {
+  color: var(--text);
+  border-color: var(--text-dim);
+}
+
+.settings-text-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.setting-input.setting-volume {
+  flex: 1;
+  min-width: 0;
+  justify-content: flex-end;
+}
+
+.settings-test-sound-btn {
+  padding: 5px 10px;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.setting-volume-track {
+  flex: 1;
+  min-width: 72px;
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+}
+
+.setting-volume-track input[type="range"] {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  accent-color: var(--accent);
+}
+
+.setting-vol-pct {
+  min-width: 28px;
+  text-align: right;
 }
 
 .setting-input {

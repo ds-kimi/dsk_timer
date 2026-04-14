@@ -9,7 +9,10 @@ const DEFAULTS = {
   funDailyLimit: 180,
   workBeforeBreak: 30,
   breakDuration: 5,
+  idleStopAfterSeconds: 30,
   autoLaunch: true,
+  overlayEnabled: false,
+  notificationVolume: 100,
 };
 
 function load() {

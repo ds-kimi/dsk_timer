@@ -1,107 +1,134 @@
 # DSK Timer
 
-A desktop work/fun activity timer for Windows, built with Electron. Track time, enforce breaks, set your own limits, and review history in a simple chart.
+Desktop work and fun timer for Windows. Electron app: small frameless window, tray icon, local data only.
+
+---
+
+## What it does
+
+- Start **Work** or **Fun**; see elapsed time as `HH:MM:SS` and today’s saved totals.
+- After enough continuous work, a **mandatory break** locks work until the countdown finishes.
+- Optional **fun limits** (per session and per day) trigger Windows notifications and in-app beeps.
+- **Activity** view shows work vs fun per day (week / month / year) and lets you reset history.
+
+---
 
 ## Features
 
-- **Work / Fun** — start either mode with one click; live `HH:MM:SS` display
-- **Today’s totals** — work and fun time for the current day on the main screen
-- **System tray** — closing the window hides to tray; the timer keeps running
-- **Persistence** — sessions and settings are stored under your user AppData folder
+| Area | Behaviour |
+|------|-----------|
+| **Tray** | Close hides the window; the process stays running. Tray menu: Show, Quit. |
+| **Single instance** | Starting the app again focuses the existing window instead of opening a second copy. |
+| **Persistence** | Sessions and settings live under your user data folder (see below). |
+| **Idle pause** | Optional: pause the active session when the system has been idle long enough (settings). |
+| **Floating overlay** | Optional small always-on-top bar (status + time). Position is adjusted from Settings (Move / Done). Stays on top of normal windows; exclusive fullscreen (many games) can still cover it. |
+| **Display scaling** | Window and overlay scale up on wide work areas (roughly 1920px baseline, capped) so the UI stays usable on large or 4K-class desktops. |
+| **Alert volume** | Slider 0–100 for in-app beeps; **Test** plays a sample. Windows toast sounds follow system volume. |
+| **Dev** | `npm run dev` enables a speed multiplier control for testing. |
+| **Updates** | Installed builds check GitHub Releases on launch (after a short delay). If a newer version exists, you are asked to download; when the installer is ready, you can restart to apply. Does not run in development (`electron .`). |
 
-### Settings (gear icon)
+---
 
-Configurable in minutes (saved to disk):
+## GitHub auto-updates
 
-- Fun limit per session and per day
-- How long you work before a mandatory break
-- Break duration
-- **Launch on startup** — registers with Windows login (can be turned off)
+1. In **`package.json`**, set **`repository.url`**, **`build.publish[].owner`**, and **`build.publish[].repo`** to your real GitHub user/org and repository name (replace `YOUR_GITHUB_USER` / `dsk_timer`).
+2. Bump **`version`** in **`package.json`** for every release (semver).
+3. **Ship a release** so **`electron-builder`** uploads the NSIS installer, **`latest.yml`**, and related files to a **GitHub Release** (not only loose files in a tag).
 
-### Work breaks
+**Option A — CI:** Push a git tag matching the version, e.g. `v1.0.1` after committing the version bump. The workflow **`.github/workflows/release.yml`** builds on Windows and runs **`electron-builder --publish always`** using **`GITHUB_TOKEN`**.
 
-When continuous work reaches your configured “work before break” time, the session stops and a break screen appears with a countdown. You cannot start work again until the break ends. Notifications and soft sounds remind you when the break starts and when it is over.
-
-### Fun limits
-
-When fun time hits your per-session or per-day limits, you get a Windows notification and a short sound.
-
-### Activity (stats icon)
-
-- Stacked bar chart of work vs fun by day
-- Ranges: **Week**, **Month**, **Year**
-- Summary totals and average per day
-- **Reset all data** — clears stored session history (with confirmation)
-
-### Dev mode
+**Option B — Local:** Create a [personal access token](https://github.com/settings/tokens) with **`repo`** scope. Copy **`.env.example`** to **`.env`**, set **`GH_TOKEN=`**, then:
 
 ```bash
-npm run dev
+npm run release
 ```
 
-Enables a high speed multiplier on a dev-only button for testing timers quickly.
+If **`GH_TOKEN`** is already set in your shell, that value is used and **`.env`** does not override it.
 
-## Data files (Windows)
+The packaged app embeds the update feed; users who installed an older build get the prompt on the next launch once the new release is public.
 
-Stored under `%APPDATA%\dsk-timer\` (or Electron’s `userData` path for the app):
+---
 
-- `sessions.json` — logged sessions (mode, date, duration)
-- `config.json` — limits and launch-on-startup preference
+## Settings
 
-## Install and run (development)
+All saved to `config.json`:
+
+- Fun per session / per day (minutes)
+- Work before break / break duration (minutes)
+- Pause after idle (seconds; `0` disables)
+- Alert volume (0–100) and floating overlay on/off
+- Launch on startup (Windows login item)
+
+---
+
+## Data location (Windows)
+
+Typical path: `%APPDATA%\dsk-timer\`
+
+| File | Contents |
+|------|----------|
+| `sessions.json` | Finished sessions (mode, start, duration) |
+| `config.json` | Settings and overlay position |
+
+---
+
+## Development
 
 ```bash
 npm install
 npm start
 ```
 
-## Build Windows installer
+```bash
+npm run dev
+```
 
-Requires Node.js on the machine that builds.
+---
+
+## Build installer
+
+Needs Node.js on the build machine.
 
 ```bash
 npm run build
 ```
 
-This regenerates icons from `assets/clock-minimal.svg`, runs **electron-builder**, then **`scripts/after-pack.js`** embeds `assets/icon.ico` into `DSK Timer.exe` with **rcedit** (so desktop/Start Menu shortcuts show your logo, not the default Electron icon). The NSIS installer is written to `dist\`:
+Regenerates icons from `assets/clock-minimal.svg`, runs **electron-builder** for Windows (NSIS), then **`scripts/after-pack.js`** uses **rcedit** so the packaged `DSK Timer.exe` carries `assets/icon.ico` (shortcuts and search show your icon, not the default Electron one).
 
-- **`DSK Timer Setup <version>.exe`** — one-click install
-- Desktop and Start Menu shortcuts (so the app appears in Windows Search)
-- The installed app uses the custom icon from `assets/icon.ico`
+Output: `dist\` — e.g. `DSK Timer Setup <version>.exe` (one-click install, desktop and Start Menu shortcuts).
 
-To rebuild only the icon files from the SVG:
+Icons only:
 
 ```bash
 npm run icons
 ```
 
-## Project layout
+---
+
+## Project layout (short)
 
 ```
-assets/
-  clock-minimal.svg   Source logo
-  icon.ico / icon.png Generated for app and build (run npm run icons)
-scripts/
-  generate-icons.js   SVG → ICO/PNG for Windows
-  after-pack.js       Embeds icon into built exe (rcedit) after pack
+assets/           SVG source, generated .ico / .png
+scripts/          Icon generation, after-pack rcedit step
 src/
-  main.js             Window, tray, IPC, startup login item
-  preload.js          Context bridge
-  config.js             Settings load/save
-  timer.js              Session timer + dev speed multiplier
-  storage.js            Session JSON read/write
-  statsData.js          Date-range aggregates for charts
-  alerts.js             Periodic checks (break trigger, fun limits)
-  alertsFun.js          Fun limit notifications
-  breaks.js             Mandatory break state
-  breaksNotify.js       Break notifications
-  renderer/
-    index.html, styles.css, app.js, events.js
-    format.js, sounds.js, breakui.js, settings.js
-    chart.js, statsPanel.js
+  main.js         Window, tray, IPC, single instance, scaling, updater
+  updater.js      GitHub Releases check (packaged builds only)
+  config.js       Settings
+  timer*.js       Session timing, pause, checkpoint
+  storage.js      sessions.json
+  statsData.js    Aggregates for charts
+  breaks*.js      Break flow and notifications
+  alerts*.js      Break trigger, fun limits
+  idle*.js        Idle detection and notifications
+  overlay*.js     Floating bar window
+  displayScale.js UI scale from primary display work area
+  preload*.js     Context bridges
+  renderer/       HTML, CSS, UI scripts, charts, overlay UI
 ```
+
+---
 
 ## Requirements
 
-- **Windows** (installer and shortcuts are Windows-focused)
-- **Node.js** for development and building
+- **Windows** (installer and shortcuts target Windows)
+- **Node.js** for `npm install`, `npm start`, and `npm run build`

@@ -13,7 +13,11 @@ contextBridge.exposeInMainWorld("timerAPI", {
   isDev: () => ipcRenderer.invoke("app:isDev"),
   minimize: () => ipcRenderer.invoke("win:minimize"),
   close: () => ipcRenderer.invoke("win:close"),
+  overlaySetMoveMode: (on) => ipcRenderer.invoke("overlay:setMoveMode", on),
+  overlayStopMove: () => ipcRenderer.invoke("overlay:stopMove"),
   onBeep: (cb) => ipcRenderer.on("alert:beep", cb),
   onBreakStart: (cb) => ipcRenderer.on("break:start", cb),
   onBreakOver: (cb) => ipcRenderer.on("break:over", cb),
+  onIdlePause: (cb) => ipcRenderer.on("timer:idle-pause", cb),
+  onIdleResume: (cb) => ipcRenderer.on("timer:idle-resume", cb),
 });

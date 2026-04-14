@@ -4,11 +4,16 @@
   "description": "Lightweight work/fun activity timer",
   "main": "src/main.js",
   "author": "DSK",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ds-kimi/dsk_timer.git"
+  },
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
     "icons": "node scripts/generate-icons.js",
-    "build": "npm run icons && set CSC_IDENTITY_AUTO_DISCOVERY=false && electron-builder --win"
+    "build": "npm run icons && set CSC_IDENTITY_AUTO_DISCOVERY=false && electron-builder --win",
+    "release": "node scripts/release.js"
   },
   "build": {
     "appId": "com.dsk.timer",
@@ -36,13 +41,25 @@
     "directories": {
       "output": "dist"
     },
-    "forceCodeSigning": false
+    "forceCodeSigning": false,
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "ds-kimi",
+        "repo": "dsk_timer"
+      }
+    ]
   },
   "devDependencies": {
+    "dotenv": "^16.4.7",
     "electron": "^33.0.0",
     "electron-builder": "^25.0.0",
     "rcedit": "^4.0.1",
     "sharp": "^0.33.5",
     "to-ico": "^1.1.5"
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.9",
+    "koffi": "^2.15.6"
   }
 }

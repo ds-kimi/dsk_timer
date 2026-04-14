@@ -1,0 +1,74 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --text: #e8e8ec;
+  --muted: #8a8a94;
+  --glass: rgba(22, 22, 28, 0.72);
+  --border: rgba(255, 255, 255, 0.08);
+  --work: #9eb8d4;
+  --fun: #c4a8d8;
+  --idle: #6e6e78;
+  --break: #c9a227;
+}
+
+html, body {
+  width: fit-content;
+  height: fit-content;
+  overflow: hidden;
+  background: transparent;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  user-select: none;
+}
+
+.shell {
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  -webkit-app-region: no-drag;
+}
+
+.shell.moving {
+  -webkit-app-region: drag;
+  outline: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--idle);
+  flex-shrink: 0;
+}
+
+.shell.mode-work .dot { background: var(--work); }
+.shell.mode-fun .dot { background: var(--fun); }
+.shell.mode-break .dot { background: var(--break); }
+.shell.mode-paused .dot {
+  background: var(--muted);
+  opacity: 0.85;
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.time {
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}

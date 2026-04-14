@@ -11,6 +11,7 @@ function persistNow() {
     sessionStart: fields.sessionStart,
     accumulatedElapsed: elapsed(fields),
     speedMultiplier: fields.speedMultiplier,
+    sessionPaused: fields.sessionPaused,
   });
 }
 
@@ -21,6 +22,7 @@ function restoreFromDisk() {
   fields.sessionStart = data.sessionStart;
   fields.accumulatedElapsed = data.accumulatedElapsed;
   fields.speedMultiplier = data.speedMultiplier;
+  fields.sessionPaused = !!data.sessionPaused;
   fields.lastSpeedChange = Date.now();
   onStart();
 }
