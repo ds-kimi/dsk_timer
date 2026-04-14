@@ -1,0 +1,292 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0f0f14;
+  --surface: #1a1a24;
+  --border: #2a2a3a;
+  --text: #e4e4ef;
+  --text-dim: #7a7a92;
+  --work: #22c55e;
+  --work-glow: rgba(34, 197, 94, 0.25);
+  --fun: #a855f7;
+  --fun-glow: rgba(168, 85, 247, 0.25);
+  --danger: #ef4444;
+  --radius: 14px;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: transparent;
+  color: var(--text);
+  user-select: none;
+  overflow: hidden;
+}
+
+#app {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 28px 24px;
+}
+
+/* ── Titlebar ── */
+#titlebar {
+  width: calc(100% + 56px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  -webkit-app-region: drag;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+
+.titlebar-btns {
+  display: flex;
+  gap: 6px;
+  -webkit-app-region: no-drag;
+}
+
+.tb-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-dim);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.tb-btn:hover { background: var(--border); }
+.tb-btn.close:hover { background: var(--danger); color: #fff; }
+
+/* ── Status Badge ── */
+#status-badge {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  border-radius: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+#status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+#status-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dim);
+  transition: color 0.3s;
+}
+
+/* ── Timer Display ── */
+#timer-display {
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+#timer-value {
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(135deg, var(--text), var(--text-dim));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.4s;
+}
+
+/* ── Mode Buttons ── */
+#mode-buttons {
+  display: flex;
+  gap: 14px;
+  width: 100%;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 14px 0;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mode-btn.work:hover,
+.mode-btn.work.active {
+  border-color: var(--work);
+  background: var(--work-glow);
+  color: var(--work);
+  box-shadow: 0 0 20px var(--work-glow);
+}
+
+.mode-btn.fun:hover,
+.mode-btn.fun.active {
+  border-color: var(--fun);
+  background: var(--fun-glow);
+  color: var(--fun);
+  box-shadow: 0 0 20px var(--fun-glow);
+}
+
+.mode-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* ── Stop Button ── */
+.stop-btn {
+  margin-top: 14px;
+  width: 100%;
+  padding: 12px 0;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-dim);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.stop-btn:hover:not(:disabled) {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.stop-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* ── Dev Speed Button ── */
+.speed-btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px 0;
+  border: 2px dashed #f59e0b;
+  border-radius: var(--radius);
+  background: rgba(245, 158, 11, 0.08);
+  color: #f59e0b;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.speed-btn:active {
+  background: rgba(245, 158, 11, 0.25);
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.3);
+  border-style: solid;
+}
+
+.speed-btn[hidden] { display: none; }
+
+/* ── Stats Cards ── */
+#stats {
+  margin-top: auto;
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.stat-card {
+  flex: 1;
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.3s;
+}
+
+.work-card { border-left: 3px solid var(--work); }
+.fun-card { border-left: 3px solid var(--fun); }
+
+.stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.work-card .stat-value { color: var(--work); }
+.fun-card .stat-value { color: var(--fun); }
+
+/* ── Active state animations ── */
+body.mode-work #status-dot {
+  background: var(--work);
+  box-shadow: 0 0 8px var(--work);
+}
+body.mode-work #status-text { color: var(--work); }
+body.mode-work #timer-value {
+  background: linear-gradient(135deg, var(--work), #86efac);
+  -webkit-background-clip: text;
+}
+
+body.mode-fun #status-dot {
+  background: var(--fun);
+  box-shadow: 0 0 8px var(--fun);
+}
+body.mode-fun #status-text { color: var(--fun); }
+body.mode-fun #timer-value {
+  background: linear-gradient(135deg, var(--fun), #d8b4fe);
+  -webkit-background-clip: text;
+}
+
+/* Pulse animation for active dot */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+body.mode-work #status-dot,
+body.mode-fun #status-dot {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Alert flash overlay */
+@keyframes flash {
+  0%, 100% { background: transparent; }
+  25%, 75% { background: rgba(239, 68, 68, 0.12); }
+}
+body.alert-flash #app {
+  animation: flash 1s ease;
+}

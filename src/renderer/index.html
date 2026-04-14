@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSK Timer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <div id="titlebar">
+      <span class="title">DSK Timer</span>
+      <div class="titlebar-btns">
+        <button id="btn-minimize" class="tb-btn">&#x2013;</button>
+        <button id="btn-close" class="tb-btn close">&#x2715;</button>
+      </div>
+    </div>
+
+    <div id="status-badge">
+      <span id="status-dot"></span>
+      <span id="status-text">Idle</span>
+    </div>
+
+    <div id="timer-display">
+      <span id="timer-value">00:00:00</span>
+    </div>
+
+    <div id="mode-buttons">
+      <button id="btn-work" class="mode-btn work">Work</button>
+      <button id="btn-fun" class="mode-btn fun">Fun</button>
+    </div>
+
+    <button id="btn-stop" class="stop-btn" disabled>Stop</button>
+    <button id="btn-speed" class="speed-btn" hidden>Hold for 200x Speed</button>
+
+    <div id="stats">
+      <div class="stat-card work-card">
+        <span class="stat-label">Today — Work</span>
+        <span id="stat-work" class="stat-value">0h 0m</span>
+      </div>
+      <div class="stat-card fun-card">
+        <span class="stat-label">Today — Fun</span>
+        <span id="stat-fun" class="stat-value">0h 0m</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
