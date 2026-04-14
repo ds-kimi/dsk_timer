@@ -46,7 +46,8 @@
       {
         "provider": "github",
         "owner": "ds-kimi",
-        "repo": "dsk_timer"
+        "repo": "dsk_timer",
+        "releaseType": "release"
       }
     ]
   },
