@@ -13,6 +13,11 @@ const overlayHost = require("./overlayHost");
 const displayScale = require("./displayScale");
 const updater = require("./updater");
 
+if (process.platform === "win32") {
+  app.setAppUserModelId("com.dsk.timer");
+}
+app.setName("DSK Timer");
+
 const IS_DEV = process.argv.includes("--dev");
 let mainWindow = null;
 let tray = null;
