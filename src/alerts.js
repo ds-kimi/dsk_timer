@@ -1,11 +1,9 @@
-const { Notification } = require("electron");
 const timer = require("./timer");
+const breaks = require("./breaks");
+const { checkFunLimits } = require("./alertsFun");
 
-const SESSION_LIMIT = 3600;     // 1h per fun session
-const DAILY_LIMIT = 10800;      // 3h total fun per day
 let interval = null;
-let sessionAlerted = false;
-let dailyAlerted = false;
+let breakAlerted = false;
 
 function start(mainWindow) {
   interval = setInterval(() => check(mainWindow), 1000);
@@ -16,33 +14,21 @@ function stop() {
 }
 
 function resetFlags() {
-  sessionAlerted = false;
-  dailyAlerted = false;
+  breakAlerted = false;
+  checkFunLimits.reset();
 }
 
 function check(mainWindow) {
+  breaks.checkBreakOver();
   const st = timer.getStatus();
-  if (st.mode !== "fun") return;
-  const dailyTotal = st.totals.fun + st.elapsed;
-
-  if (!sessionAlerted && st.elapsed >= SESSION_LIMIT) {
-    fireAlert("1 hour of fun this session!", mainWindow);
-    sessionAlerted = true;
+  if (!st.mode) return;
+  if (st.mode === "work" && !breakAlerted && st.elapsed >= breaks.getStatus().workLimit) {
+    breakAlerted = true;
+    timer.stopSession();
+    breaks.startBreak();
+    mainWindow.webContents.send("break:start");
   }
-  if (!dailyAlerted && dailyTotal >= DAILY_LIMIT) {
-    fireAlert("3 hours of fun today! Time to work.", mainWindow);
-    dailyAlerted = true;
-  }
-}
-
-function fireAlert(body, mainWindow) {
-  new Notification({
-    title: "DSK Timer — Fun Limit",
-    body,
-    urgency: "critical",
-  }).show();
-  // Trigger beep sound in renderer
-  mainWindow.webContents.send("alert:beep");
+  if (st.mode === "fun") checkFunLimits(st, mainWindow);
 }
 
 module.exports = { start, stop, resetFlags };

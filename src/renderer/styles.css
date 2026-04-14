@@ -211,6 +211,43 @@ body {
 
 .speed-btn[hidden] { display: none; }
 
+/* ── Break Panel ── */
+.break-panel {
+  margin-top: 16px;
+  width: 100%;
+  padding: 20px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 2px solid #3b82f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 0 24px rgba(59, 130, 246, 0.15);
+}
+
+.break-panel[hidden] { display: none; }
+
+.break-icon { font-size: 28px; }
+
+.break-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #60a5fa;
+}
+
+.break-countdown {
+  font-size: 36px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #93c5fd;
+}
+
+.break-hint {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
 /* ── Stats Cards ── */
 #stats {
   margin-top: auto;
@@ -272,13 +309,24 @@ body.mode-fun #timer-value {
   -webkit-background-clip: text;
 }
 
+body.mode-break #status-dot {
+  background: #3b82f6;
+  box-shadow: 0 0 8px #3b82f6;
+}
+body.mode-break #status-text { color: #60a5fa; }
+body.mode-break #timer-value {
+  background: linear-gradient(135deg, #3b82f6, #93c5fd);
+  -webkit-background-clip: text;
+}
+
 /* Pulse animation for active dot */
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
 }
 body.mode-work #status-dot,
-body.mode-fun #status-dot {
+body.mode-fun #status-dot,
+body.mode-break #status-dot {
   animation: pulse 2s ease-in-out infinite;
 }
 

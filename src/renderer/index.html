@@ -33,6 +33,13 @@
     <button id="btn-stop" class="stop-btn" disabled>Stop</button>
     <button id="btn-speed" class="speed-btn" hidden>Hold for 200x Speed</button>
 
+    <div id="break-panel" class="break-panel" hidden>
+      <span class="break-icon">&#9749;</span>
+      <span class="break-title">Break Time</span>
+      <span id="break-countdown" class="break-countdown">05:00</span>
+      <span id="break-hint" class="break-hint">Relax, you earned it</span>
+    </div>
+
     <div id="stats">
       <div class="stat-card work-card">
         <span class="stat-label">Today — Work</span>
@@ -45,6 +52,10 @@
     </div>
   </div>
 
+  <script src="format.js"></script>
+  <script src="sounds.js"></script>
+  <script src="breakui.js"></script>
   <script src="app.js"></script>
+  <script src="events.js"></script>
 </body>
 </html>

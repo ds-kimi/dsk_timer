@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } = require("electr
 const path = require("path");
 const timer = require("./timer");
 const alerts = require("./alerts");
+const breaks = require("./breaks");
 
 const IS_DEV = process.argv.includes("--dev");
 let mainWindow = null;
@@ -40,12 +41,17 @@ function createTray() {
 
 function registerIPC() {
   ipcMain.handle("timer:start", (_, mode) => {
+    if (mode === "work" && !breaks.canResumeWork()) {
+      return { error: "break", remaining: breaks.getStatus().remaining };
+    }
+    breaks.endBreak();
     alerts.resetFlags();
     return timer.startSession(mode);
   });
   ipcMain.handle("timer:stop", () => timer.stopSession());
   ipcMain.handle("timer:status", () => timer.getStatus());
   ipcMain.handle("timer:speed", (_, mult) => timer.setSpeed(mult));
+  ipcMain.handle("break:status", () => breaks.getStatus());
   ipcMain.handle("app:isDev", () => IS_DEV);
   ipcMain.handle("win:minimize", () => mainWindow.hide());
   ipcMain.handle("win:close", () => mainWindow.hide());
@@ -55,6 +61,7 @@ app.whenReady().then(() => {
   createWindow();
   createTray();
   registerIPC();
+  breaks.init(mainWindow);
   alerts.start(mainWindow);
 });
 
