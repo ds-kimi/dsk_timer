@@ -1,3 +1,8 @@
+function overlayElapsedForDisplay(st) {
+  if (st.onBreak) return st.breakRemaining ?? 0;
+  return st.elapsed;
+}
+
 function overlayLabel(st) {
   if (st.mode) {
     return st.paused ? "Paused" : (st.mode === "work" ? "Work" : "Fun");
@@ -14,4 +19,4 @@ function overlayModeClass(st) {
   return "mode-idle";
 }
 
-window.overlayStatus = { overlayLabel, overlayModeClass };
+window.overlayStatus = { overlayElapsedForDisplay, overlayLabel, overlayModeClass };

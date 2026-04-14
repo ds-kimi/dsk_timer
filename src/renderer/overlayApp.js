@@ -22,7 +22,7 @@ async function refresh() {
   const st = await window.overlayAPI.getStatus();
   const moving = root.classList.contains("moving");
   elLabel.textContent = window.overlayStatus.overlayLabel(st);
-  elTime.textContent = window.fmt.formatTime(st.elapsed);
+  elTime.textContent = window.fmt.formatTime(window.overlayStatus.overlayElapsedForDisplay(st));
   root.className = `shell ${window.overlayStatus.overlayModeClass(st)}`;
   if (moving) root.classList.add("moving");
   requestAnimationFrame(() => requestAnimationFrame(pushSize));

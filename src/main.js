@@ -82,10 +82,14 @@ function registerIPC() {
     return timer.startSession(mode);
   });
   ipcMain.handle("timer:stop", () => timer.stopSession());
-  ipcMain.handle("timer:status", () => ({
-    ...timer.getStatus(),
-    onBreak: breaks.getStatus().onBreak,
-  }));
+  ipcMain.handle("timer:status", () => {
+    const br = breaks.getStatus();
+    return {
+      ...timer.getStatus(),
+      onBreak: br.onBreak,
+      breakRemaining: br.remaining,
+    };
+  });
   ipcMain.handle("timer:speed", (_, mult) => timer.setSpeed(mult));
   ipcMain.handle("break:status", () => breaks.getStatus());
   ipcMain.handle("config:load", () => config.load());

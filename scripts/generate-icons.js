@@ -15,6 +15,7 @@ async function main() {
   );
   fs.writeFileSync(path.join(outDir, "icon.ico"), await toIco(pngBuffers));
   fs.writeFileSync(path.join(outDir, "icon.png"), pngBuffers[3]);
+  await sharp(svg).resize(128).png().toFile(path.join(outDir, "logo.png"));
 }
 
 main().catch((e) => {
