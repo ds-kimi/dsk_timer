@@ -12,29 +12,35 @@
     <div id="titlebar">
       <span class="title">DSK Timer</span>
       <div class="titlebar-btns">
-        <button id="btn-stats" class="tb-btn" title="Stats">&#x2261;</button>
-        <button id="btn-settings" class="tb-btn" title="Settings">&#x2699;</button>
-        <button id="btn-minimize" class="tb-btn">&#x2013;</button>
-        <button id="btn-close" class="tb-btn close">&#x2715;</button>
+        <button id="btn-stats" class="tb-btn" title="Activity — work and fun by day (week, month, year)" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="8" width="3" height="6" rx="0.5" />
+            <rect x="6.5" y="4" width="3" height="10" rx="0.5" />
+            <rect x="11" y="6" width="3" height="8" rx="0.5" />
+          </svg>
+        </button>
+        <button id="btn-settings" class="tb-btn" title="Settings — limits, breaks, launch on startup" type="button">&#x2699;</button>
+        <button id="btn-minimize" class="tb-btn" title="Minimize to tray (timer keeps running)" type="button">&#x2013;</button>
+        <button id="btn-close" class="tb-btn close" title="Hide window — app stays in tray; timer keeps running" type="button">&#x2715;</button>
       </div>
     </div>
 
-    <div id="status-badge">
+    <div id="status-badge" title="Whether the timer is idle, working, or on fun time">
       <span id="status-dot"></span>
       <span id="status-text">Idle</span>
     </div>
 
-    <div id="timer-display">
+    <div id="timer-display" title="Elapsed time for the current session">
       <span id="timer-value">00:00:00</span>
     </div>
 
     <div id="mode-buttons">
-      <button id="btn-work" class="mode-btn work">Work</button>
-      <button id="btn-fun" class="mode-btn fun">Fun</button>
+      <button id="btn-work" class="mode-btn work" title="Start tracking work time" type="button">Work</button>
+      <button id="btn-fun" class="mode-btn fun" title="Start tracking fun time" type="button">Fun</button>
     </div>
 
-    <button id="btn-stop" class="stop-btn" disabled>Stop</button>
-    <button id="btn-speed" class="speed-btn" hidden>Hold for 200x Speed</button>
+    <button id="btn-stop" class="stop-btn" disabled title="Stop the current session and save the time" type="button">Stop</button>
+    <button id="btn-speed" class="speed-btn" hidden title="Dev only — hold to run the clock at 200× speed" type="button">Hold for 200x Speed</button>
 
     <div id="break-panel" class="break-panel" hidden>
       <span class="break-icon">&#9749;</span>
@@ -44,11 +50,11 @@
     </div>
 
     <div id="stats">
-      <div class="stat-card work-card">
+      <div class="stat-card work-card" title="Total work time recorded today (from saved sessions)">
         <span class="stat-label">Today — Work</span>
         <span id="stat-work" class="stat-value">0h 0m</span>
       </div>
-      <div class="stat-card fun-card">
+      <div class="stat-card fun-card" title="Total fun time recorded today (from saved sessions)">
         <span class="stat-label">Today — Fun</span>
         <span id="stat-fun" class="stat-value">0h 0m</span>
       </div>
@@ -57,31 +63,31 @@
     <div id="settings-panel" class="overlay-panel" hidden>
       <div class="overlay-header">
         <span class="overlay-title">Settings</span>
-        <button id="btn-settings-close" class="tb-btn">&#x2715;</button>
+        <button id="btn-settings-close" class="tb-btn" title="Close settings" type="button">&#x2715;</button>
       </div>
       <div class="settings-body">
-        <label class="setting-row">
+        <label class="setting-row" title="Maximum fun time in one fun session before you are notified">
           <span class="setting-label">Fun per session</span>
           <div class="setting-input">
             <input type="number" id="cfg-fun-session" min="1" max="480" />
             <span class="setting-unit">min</span>
           </div>
         </label>
-        <label class="setting-row">
+        <label class="setting-row" title="Maximum fun time per calendar day before you are notified">
           <span class="setting-label">Fun per day</span>
           <div class="setting-input">
             <input type="number" id="cfg-fun-daily" min="1" max="1440" />
             <span class="setting-unit">min</span>
           </div>
         </label>
-        <label class="setting-row">
+        <label class="setting-row" title="Continuous work time before a mandatory break is required">
           <span class="setting-label">Work before break</span>
           <div class="setting-input">
             <input type="number" id="cfg-work-before" min="1" max="480" />
             <span class="setting-unit">min</span>
           </div>
         </label>
-        <label class="setting-row">
+        <label class="setting-row" title="How long each mandatory break lasts">
           <span class="setting-label">Break duration</span>
           <div class="setting-input">
             <input type="number" id="cfg-break-dur" min="1" max="60" />
@@ -89,7 +95,7 @@
           </div>
         </label>
         <div class="setting-divider"></div>
-        <label class="setting-row">
+        <label class="setting-row" title="Start DSK Timer when Windows logs in">
           <span class="setting-label">Launch on startup</span>
           <div class="toggle-wrap">
             <input type="checkbox" id="cfg-autolaunch" class="toggle-input" />
@@ -97,46 +103,47 @@
           </div>
         </label>
       </div>
-      <button id="btn-settings-save" class="overlay-action-btn">Save</button>
+      <button id="btn-settings-save" class="overlay-action-btn" title="Save settings to disk" type="button">Save</button>
     </div>
 
     <div id="stats-panel" class="overlay-panel" hidden>
       <div class="overlay-header">
         <span class="overlay-title">Activity</span>
-        <button id="btn-stats-close" class="tb-btn">&#x2715;</button>
+        <button id="btn-stats-close" class="tb-btn" title="Close activity" type="button">&#x2715;</button>
       </div>
       <div class="stats-tabs">
-        <button class="stats-tab active" data-range="week">Week</button>
-        <button class="stats-tab" data-range="month">Month</button>
-        <button class="stats-tab" data-range="year">Year</button>
+        <button class="stats-tab active" data-range="week" title="Last 7 days" type="button">Week</button>
+        <button class="stats-tab" data-range="month" title="Last 30 days" type="button">Month</button>
+        <button class="stats-tab" data-range="year" title="Last 12 months (rolling)" type="button">Year</button>
       </div>
-      <div class="stats-chart-wrap">
+      <div class="stats-chart-wrap" title="Hover a bar for that day’s work and fun">
         <canvas id="stats-canvas"></canvas>
+        <div id="chart-tooltip" class="chart-tooltip" hidden></div>
       </div>
       <div class="stats-legend">
-        <span class="legend-item"><span class="legend-dot legend-work"></span> Work</span>
-        <span class="legend-item"><span class="legend-dot legend-fun"></span> Fun</span>
+        <span class="legend-item" title="Light segment — work time per day"><span class="legend-dot legend-work"></span> Work</span>
+        <span class="legend-item" title="Dark segment — fun time per day"><span class="legend-dot legend-fun"></span> Fun</span>
       </div>
       <div class="stats-summary">
-        <div class="summary-item">
+        <div class="summary-item" title="Sum of work time in the selected range">
           <span class="summary-label">Total work</span>
           <span id="summary-work" class="summary-value">0h</span>
         </div>
-        <div class="summary-item">
+        <div class="summary-item" title="Sum of fun time in the selected range">
           <span class="summary-label">Total fun</span>
           <span id="summary-fun" class="summary-value">0h</span>
         </div>
-        <div class="summary-item">
+        <div class="summary-item" title="Average combined work + fun per day in this range">
           <span class="summary-label">Avg / day</span>
           <span id="summary-avg" class="summary-value">0h</span>
         </div>
       </div>
-      <button id="btn-stats-reset" class="stats-reset-btn">Reset all data</button>
+      <button id="btn-stats-reset" class="stats-reset-btn" title="Delete all saved session history (cannot be undone)" type="button">Reset all data</button>
       <div id="reset-confirm" class="reset-confirm" hidden>
         <span class="reset-msg">This will delete all session history.</span>
         <div class="reset-actions">
-          <button id="btn-reset-yes" class="reset-yes">Confirm</button>
-          <button id="btn-reset-no" class="reset-no">Cancel</button>
+          <button id="btn-reset-yes" class="reset-yes" title="Permanently delete all sessions" type="button">Confirm</button>
+          <button id="btn-reset-no" class="reset-no" title="Keep your data" type="button">Cancel</button>
         </div>
       </div>
     </div>
@@ -147,6 +154,7 @@
   <script src="breakui.js"></script>
   <script src="settings.js"></script>
   <script src="chart.js"></script>
+  <script src="chartTooltip.js"></script>
   <script src="statsPanel.js"></script>
   <script src="app.js"></script>
   <script src="events.js"></script>

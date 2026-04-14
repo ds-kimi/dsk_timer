@@ -8,7 +8,10 @@ function drawChart(canvas, data, range) {
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, w, h);
 
-  if (!data.length) return;
+  if (!data.length) {
+    canvas._chartLayout = null;
+    return;
+  }
   const maxVal = Math.max(...data.map(d => d.work + d.fun), 1);
   const labels = data.map(d => formatLabel(d.date, range));
   const barArea = w - 32;
@@ -19,6 +22,7 @@ function drawChart(canvas, data, range) {
 
   drawBars(ctx, data, maxVal, barW, gap, top, chartH);
   drawLabels(ctx, labels, data.length, barW, gap, h, bottom);
+  canvas._chartLayout = { data, barW, gap, top, chartH };
 }
 
 function drawBars(ctx, data, max, bw, gap, top, ch) {

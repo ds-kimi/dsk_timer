@@ -1,52 +1,52 @@
+const fields = require("./sessionFields");
 const storage = require("./storage");
-
-let currentMode = null;
-let sessionStart = null;
-let speedMultiplier = 1;
-let lastSpeedChange = null;
-let accumulatedElapsed = 0;
+const checkpoint = require("./timerCheckpoint");
+const { elapsed } = require("./timerMath");
 
 function startSession(mode) {
-  if (currentMode) stopSession();
-  currentMode = mode;
-  sessionStart = Date.now();
-  lastSpeedChange = Date.now();
-  accumulatedElapsed = 0;
-  speedMultiplier = 1;
-  return { mode, startTime: sessionStart };
+  if (fields.currentMode) stopSession();
+  fields.currentMode = mode;
+  fields.sessionStart = Date.now();
+  fields.lastSpeedChange = Date.now();
+  fields.accumulatedElapsed = 0;
+  fields.speedMultiplier = 1;
+  checkpoint.onStart();
+  return { mode, startTime: fields.sessionStart };
 }
 
 function setSpeed(mult) {
-  accumulatedElapsed = getElapsed();
-  lastSpeedChange = Date.now();
-  speedMultiplier = mult;
+  fields.accumulatedElapsed = elapsed(fields);
+  fields.lastSpeedChange = Date.now();
+  fields.speedMultiplier = mult;
 }
 
 function stopSession() {
-  if (!currentMode) return null;
-  const duration = getElapsed();
-  const startIso = new Date(sessionStart).toISOString();
-  storage.addSession(currentMode, startIso, duration);
-  const result = { mode: currentMode, duration };
-  currentMode = null;
-  sessionStart = null;
-  speedMultiplier = 1;
-  accumulatedElapsed = 0;
+  if (!fields.currentMode) return null;
+  const duration = elapsed(fields);
+  const startIso = new Date(fields.sessionStart).toISOString();
+  storage.addSession(fields.currentMode, startIso, duration);
+  const result = { mode: fields.currentMode, duration };
+  checkpoint.onStop();
+  fields.currentMode = null;
+  fields.sessionStart = null;
+  fields.speedMultiplier = 1;
+  fields.accumulatedElapsed = 0;
   return result;
-}
-
-function getElapsed() {
-  if (!sessionStart) return 0;
-  const segmentReal = (Date.now() - lastSpeedChange) / 1000;
-  return Math.floor(accumulatedElapsed + segmentReal * speedMultiplier);
 }
 
 function getStatus() {
   return {
-    mode: currentMode,
-    elapsed: getElapsed(),
+    mode: fields.currentMode,
+    elapsed: elapsed(fields),
     totals: storage.getTodayTotals(),
   };
 }
 
-module.exports = { startSession, stopSession, getStatus, setSpeed };
+module.exports = {
+  startSession,
+  stopSession,
+  getStatus,
+  setSpeed,
+  persistNow: checkpoint.persistNow,
+  restoreFromDisk: checkpoint.restoreFromDisk,
+};

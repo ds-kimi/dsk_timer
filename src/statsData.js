@@ -1,8 +1,10 @@
 const fs = require("fs");
 const path = require("path");
 const { app } = require("electron");
+const statsFake = require("./statsFake");
 
 const DATA_FILE = path.join(app.getPath("userData"), "sessions.json");
+const IS_DEV = process.argv.includes("--dev");
 
 function loadAll() {
   if (!fs.existsSync(DATA_FILE)) return [];
@@ -11,6 +13,7 @@ function loadAll() {
 }
 
 function getRange(startDate, endDate) {
+  if (IS_DEV) return statsFake.series(startDate, endDate);
   const all = loadAll();
   const days = {};
   for (const s of all) {

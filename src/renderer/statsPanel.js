@@ -25,6 +25,7 @@ async function refreshChart() {
   const data = await window.timerAPI.statsRange(start, end);
   const canvas = $("#stats-canvas");
   window.chart.draw(canvas, data, currentRange);
+  window.chartTooltip.ensure(canvas);
   updateSummary(data);
 }
 

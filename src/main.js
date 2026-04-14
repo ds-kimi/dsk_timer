@@ -68,8 +68,14 @@ function registerIPC() {
   ipcMain.handle("stats:range", (_, s, e) => statsData.getRange(s, e));
   ipcMain.handle("stats:clear", () => statsData.clearAll());
   ipcMain.handle("app:isDev", () => IS_DEV);
-  ipcMain.handle("win:minimize", () => mainWindow.hide());
-  ipcMain.handle("win:close", () => mainWindow.hide());
+  ipcMain.handle("win:minimize", () => {
+    timer.persistNow();
+    mainWindow.hide();
+  });
+  ipcMain.handle("win:close", () => {
+    timer.persistNow();
+    mainWindow.hide();
+  });
 }
 
 function applyAutoLaunch() {
@@ -77,8 +83,11 @@ function applyAutoLaunch() {
   app.setLoginItemSettings({ openAtLogin: cfg.autoLaunch });
 }
 
+app.on("before-quit", () => timer.persistNow());
+
 app.whenReady().then(() => {
   applyAutoLaunch();
+  timer.restoreFromDisk();
   createWindow();
   createTray();
   registerIPC();
