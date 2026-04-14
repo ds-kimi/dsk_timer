@@ -8,6 +8,12 @@ const SIZE = { width: 96, height: 28 };
 let win = null;
 let uiScale = 1;
 
+function passthroughClicks(on) {
+  if (!win || win.isDestroyed()) return;
+  if (on) win.setIgnoreMouseEvents(true, { forward: true });
+  else win.setIgnoreMouseEvents(false);
+}
+
 function syncEnabled() {
   const cfg = config.load();
   uiScale = displayScale.getUiScale();
@@ -18,6 +24,7 @@ function syncEnabled() {
   if (win && !win.isDestroyed()) {
     applyTop(win);
     if (!win.isVisible()) win.show();
+    passthroughClicks(true);
     return;
   }
   const b = boundsUtil.readBounds(cfg, SIZE, uiScale);
@@ -25,10 +32,12 @@ function syncEnabled() {
   const html = path.join(__dirname, "renderer", "overlay.html");
   win = createOverlay(b, preload, html, uiScale);
   win.on("closed", () => { win = null; });
+  win.once("show", () => passthroughClicks(true));
 }
 
 function setMoveMode(on) {
   if (!win || win.isDestroyed()) return;
+  passthroughClicks(!on);
   win.webContents.send("overlay:moveMode", !!on);
 }
 
