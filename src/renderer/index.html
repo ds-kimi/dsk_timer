@@ -106,19 +106,26 @@
       <button id="btn-settings-save" class="overlay-action-btn" title="Save settings to disk" type="button">Save</button>
     </div>
 
-    <div id="stats-panel" class="overlay-panel" hidden>
+    <div id="stats-panel" class="overlay-panel stats-overlay">
       <div class="overlay-header">
         <span class="overlay-title">Activity</span>
         <button id="btn-stats-close" class="tb-btn" title="Close activity" type="button">&#x2715;</button>
       </div>
       <div class="stats-tabs">
-        <button class="stats-tab active" data-range="week" title="Last 7 days" type="button">Week</button>
+        <button class="stats-tab active" data-range="week" title="Current calendar week (Mon–Sun)" type="button">Week</button>
         <button class="stats-tab" data-range="month" title="Last 30 days" type="button">Month</button>
         <button class="stats-tab" data-range="year" title="Last 12 months (rolling)" type="button">Year</button>
       </div>
       <div class="stats-chart-wrap" title="Hover a bar for that day’s work and fun">
-        <canvas id="stats-canvas"></canvas>
-        <div id="chart-tooltip" class="chart-tooltip" hidden></div>
+        <div id="stats-chart-nav" class="stats-chart-nav" hidden>
+          <button type="button" id="btn-stats-nav-prev" class="stats-nav-btn" title="Previous period" aria-label="Previous">&#8592;</button>
+          <span id="stats-range-label" class="stats-range-label"></span>
+          <button type="button" id="btn-stats-nav-next" class="stats-nav-btn" title="Next period" aria-label="Next">&#8594;</button>
+        </div>
+        <div class="stats-chart-canvas-area">
+          <canvas id="stats-canvas"></canvas>
+          <div id="chart-tooltip" class="chart-tooltip" hidden></div>
+        </div>
       </div>
       <div class="stats-legend">
         <span class="legend-item" title="Light segment — work time per day"><span class="legend-dot legend-work"></span> Work</span>
@@ -153,8 +160,15 @@
   <script src="sounds.js"></script>
   <script src="breakui.js"></script>
   <script src="settings.js"></script>
+  <script src="chartSeparators.js"></script>
+  <script src="chartBarAnim.js"></script>
   <script src="chart.js"></script>
+  <script src="chartHit.js"></script>
+  <script src="dateRangeClip.js"></script>
+  <script src="statsDrill.js"></script>
   <script src="chartTooltip.js"></script>
+  <script src="statsSummary.js"></script>
+  <script src="statsNavUi.js"></script>
   <script src="statsPanel.js"></script>
   <script src="app.js"></script>
   <script src="events.js"></script>

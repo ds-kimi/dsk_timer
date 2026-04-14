@@ -1,4 +1,5 @@
-function drawChart(canvas, data, range) {
+function drawChart(canvas, data, range, opts) {
+  window.chartBarAnim.cancel(canvas);
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const w = canvas.clientWidth;
@@ -17,10 +18,15 @@ function drawChart(canvas, data, range) {
   const barArea = w - 32;
   const barW = Math.min(24, (barArea / data.length) * 0.6);
   const gap = (barArea - barW * data.length) / (data.length + 1);
-  const top = 8, bottom = 22;
-  const chartH = h - top - bottom;
+  const top = 8, bottom = 22, chartH = h - top - bottom;
+  const layout = { maxVal, barW, gap, top, chartH, labels, bottom };
 
+  if (opts && opts.animate) {
+    window.chartBarAnim.run(canvas, ctx, w, h, dpr, data, range, layout, drawLabels);
+    return;
+  }
   drawBars(ctx, data, maxVal, barW, gap, top, chartH);
+  window.chartSeparators.draw(ctx, data, barW, gap, top, chartH, 16, range);
   drawLabels(ctx, labels, data.length, barW, gap, h, bottom);
   canvas._chartLayout = { data, barW, gap, top, chartH };
 }

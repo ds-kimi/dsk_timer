@@ -13,6 +13,8 @@ $("#btn-stats-close").addEventListener("click", () => window.statsUI.close());
 document.querySelectorAll(".stats-tab").forEach(tab => {
   tab.addEventListener("click", () => window.setStatsRange(tab.dataset.range));
 });
+$("#btn-stats-nav-prev").addEventListener("click", () => window.statsNavWire(-1));
+$("#btn-stats-nav-next").addEventListener("click", () => window.statsNavWire(1));
 
 // Stats reset with confirmation
 $("#btn-stats-reset").addEventListener("click", () => {
@@ -24,6 +26,7 @@ $("#btn-reset-no").addEventListener("click", () => {
 $("#btn-reset-yes").addEventListener("click", async () => {
   await window.timerAPI.statsClear();
   $("#reset-confirm").hidden = true;
+  window.statsDrill.reset();
   await window.statsUI.refresh();
 });
 
