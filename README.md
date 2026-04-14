@@ -35,9 +35,7 @@ Desktop work and fun timer for Windows. Electron app: small frameless window, tr
 2. Bump **`version`** in **`package.json`** for every release (semver).
 3. **Ship a release** so **`electron-builder`** uploads the NSIS installer, **`latest.yml`**, and related files to a **GitHub Release** (not only loose files in a tag).
 
-**Option A — CI:** Push a git tag matching the version, e.g. `v1.0.1` after committing the version bump. The workflow **`.github/workflows/release.yml`** builds on Windows and runs **`electron-builder --publish always`** using **`GITHUB_TOKEN`**.
-
-**Option B — Local:** Create a [personal access token](https://github.com/settings/tokens) with **`repo`** scope. Copy **`.env.example`** to **`.env`**, set **`GH_TOKEN=`**, then:
+Create a [personal access token](https://github.com/settings/tokens) with **`repo`** scope. Copy **`.env.example`** to **`.env`**, set **`GH_TOKEN=`**, then:
 
 ```bash
 npm run release
