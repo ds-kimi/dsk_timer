@@ -9,6 +9,7 @@ const DEFAULTS = {
   funDailyLimit: 180,
   workBeforeBreak: 30,
   breakDuration: 5,
+  autoLaunch: true,
 };
 
 function load() {

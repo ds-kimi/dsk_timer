@@ -8,6 +8,8 @@ contextBridge.exposeInMainWorld("timerAPI", {
   breakStatus: () => ipcRenderer.invoke("break:status"),
   loadConfig: () => ipcRenderer.invoke("config:load"),
   saveConfig: (c) => ipcRenderer.invoke("config:save", c),
+  statsRange: (s, e) => ipcRenderer.invoke("stats:range", s, e),
+  statsClear: () => ipcRenderer.invoke("stats:clear"),
   isDev: () => ipcRenderer.invoke("app:isDev"),
   minimize: () => ipcRenderer.invoke("win:minimize"),
   close: () => ipcRenderer.invoke("win:close"),

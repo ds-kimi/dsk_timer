@@ -4,6 +4,7 @@ async function openSettings() {
   $("#cfg-fun-daily").value = cfg.funDailyLimit;
   $("#cfg-work-before").value = cfg.workBeforeBreak;
   $("#cfg-break-dur").value = cfg.breakDuration;
+  $("#cfg-autolaunch").checked = cfg.autoLaunch;
   $("#settings-panel").hidden = false;
 }
 
@@ -17,6 +18,7 @@ async function saveSettings() {
     funDailyLimit: parseInt($("#cfg-fun-daily").value, 10) || 180,
     workBeforeBreak: parseInt($("#cfg-work-before").value, 10) || 30,
     breakDuration: parseInt($("#cfg-break-dur").value, 10) || 5,
+    autoLaunch: $("#cfg-autolaunch").checked,
   };
   await window.timerAPI.saveConfig(cfg);
   closeSettings();

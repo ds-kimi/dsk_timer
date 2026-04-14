@@ -1,9 +1,13 @@
 const { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } = require("electron");
+const fs = require("fs");
 const path = require("path");
+
+const ICON_PATH = path.join(__dirname, "..", "assets", "icon.ico");
 const timer = require("./timer");
 const alerts = require("./alerts");
 const breaks = require("./breaks");
 const config = require("./config");
+const statsData = require("./statsData");
 
 const IS_DEV = process.argv.includes("--dev");
 let mainWindow = null;
@@ -16,6 +20,7 @@ function createWindow() {
     resizable: false,
     frame: false,
     transparent: true,
+    icon: fs.existsSync(ICON_PATH) ? ICON_PATH : undefined,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
@@ -30,7 +35,9 @@ function createWindow() {
 }
 
 function createTray() {
-  const icon = nativeImage.createEmpty();
+  const icon = fs.existsSync(ICON_PATH)
+    ? nativeImage.createFromPath(ICON_PATH)
+    : nativeImage.createEmpty();
   tray = new Tray(icon);
   tray.setToolTip("DSK Timer");
   tray.setContextMenu(Menu.buildFromTemplate([
@@ -54,13 +61,24 @@ function registerIPC() {
   ipcMain.handle("timer:speed", (_, mult) => timer.setSpeed(mult));
   ipcMain.handle("break:status", () => breaks.getStatus());
   ipcMain.handle("config:load", () => config.load());
-  ipcMain.handle("config:save", (_, cfg) => config.save(cfg));
+  ipcMain.handle("config:save", (_, cfg) => {
+    config.save(cfg);
+    applyAutoLaunch();
+  });
+  ipcMain.handle("stats:range", (_, s, e) => statsData.getRange(s, e));
+  ipcMain.handle("stats:clear", () => statsData.clearAll());
   ipcMain.handle("app:isDev", () => IS_DEV);
   ipcMain.handle("win:minimize", () => mainWindow.hide());
   ipcMain.handle("win:close", () => mainWindow.hide());
 }
 
+function applyAutoLaunch() {
+  const cfg = config.load();
+  app.setLoginItemSettings({ openAtLogin: cfg.autoLaunch });
+}
+
 app.whenReady().then(() => {
+  applyAutoLaunch();
   createWindow();
   createTray();
   registerIPC();

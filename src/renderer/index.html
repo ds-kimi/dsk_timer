@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DSK Timer</title>
+  <link rel="icon" type="image/png" href="../../assets/icon.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -11,7 +12,8 @@
     <div id="titlebar">
       <span class="title">DSK Timer</span>
       <div class="titlebar-btns">
-        <button id="btn-settings" class="tb-btn">&#x2699;</button>
+        <button id="btn-stats" class="tb-btn" title="Stats">&#x2261;</button>
+        <button id="btn-settings" class="tb-btn" title="Settings">&#x2699;</button>
         <button id="btn-minimize" class="tb-btn">&#x2013;</button>
         <button id="btn-close" class="tb-btn close">&#x2715;</button>
       </div>
@@ -51,11 +53,10 @@
         <span id="stat-fun" class="stat-value">0h 0m</span>
       </div>
     </div>
-  </div>
 
-    <div id="settings-panel" class="settings-panel" hidden>
-      <div class="settings-header">
-        <span class="settings-title">Settings</span>
+    <div id="settings-panel" class="overlay-panel" hidden>
+      <div class="overlay-header">
+        <span class="overlay-title">Settings</span>
         <button id="btn-settings-close" class="tb-btn">&#x2715;</button>
       </div>
       <div class="settings-body">
@@ -87,14 +88,66 @@
             <span class="setting-unit">min</span>
           </div>
         </label>
+        <div class="setting-divider"></div>
+        <label class="setting-row">
+          <span class="setting-label">Launch on startup</span>
+          <div class="toggle-wrap">
+            <input type="checkbox" id="cfg-autolaunch" class="toggle-input" />
+            <span class="toggle-track"></span>
+          </div>
+        </label>
       </div>
-      <button id="btn-settings-save" class="settings-save">Save</button>
+      <button id="btn-settings-save" class="overlay-action-btn">Save</button>
     </div>
+
+    <div id="stats-panel" class="overlay-panel" hidden>
+      <div class="overlay-header">
+        <span class="overlay-title">Activity</span>
+        <button id="btn-stats-close" class="tb-btn">&#x2715;</button>
+      </div>
+      <div class="stats-tabs">
+        <button class="stats-tab active" data-range="week">Week</button>
+        <button class="stats-tab" data-range="month">Month</button>
+        <button class="stats-tab" data-range="year">Year</button>
+      </div>
+      <div class="stats-chart-wrap">
+        <canvas id="stats-canvas"></canvas>
+      </div>
+      <div class="stats-legend">
+        <span class="legend-item"><span class="legend-dot legend-work"></span> Work</span>
+        <span class="legend-item"><span class="legend-dot legend-fun"></span> Fun</span>
+      </div>
+      <div class="stats-summary">
+        <div class="summary-item">
+          <span class="summary-label">Total work</span>
+          <span id="summary-work" class="summary-value">0h</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Total fun</span>
+          <span id="summary-fun" class="summary-value">0h</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Avg / day</span>
+          <span id="summary-avg" class="summary-value">0h</span>
+        </div>
+      </div>
+      <button id="btn-stats-reset" class="stats-reset-btn">Reset all data</button>
+      <div id="reset-confirm" class="reset-confirm" hidden>
+        <span class="reset-msg">This will delete all session history.</span>
+        <div class="reset-actions">
+          <button id="btn-reset-yes" class="reset-yes">Confirm</button>
+          <button id="btn-reset-no" class="reset-no">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="format.js"></script>
   <script src="sounds.js"></script>
   <script src="breakui.js"></script>
   <script src="settings.js"></script>
+  <script src="chart.js"></script>
+  <script src="statsPanel.js"></script>
   <script src="app.js"></script>
   <script src="events.js"></script>
 </body>

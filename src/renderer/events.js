@@ -1,4 +1,5 @@
 // Titlebar
+$("#btn-stats").addEventListener("click", () => window.statsUI.open());
 $("#btn-settings").addEventListener("click", () => window.settingsUI.open());
 $("#btn-minimize").addEventListener("click", () => window.timerAPI.minimize());
 $("#btn-close").addEventListener("click", () => window.timerAPI.close());
@@ -7,12 +8,31 @@ $("#btn-close").addEventListener("click", () => window.timerAPI.close());
 $("#btn-settings-close").addEventListener("click", () => window.settingsUI.close());
 $("#btn-settings-save").addEventListener("click", () => window.settingsUI.save());
 
+// Stats
+$("#btn-stats-close").addEventListener("click", () => window.statsUI.close());
+document.querySelectorAll(".stats-tab").forEach(tab => {
+  tab.addEventListener("click", () => window.setStatsRange(tab.dataset.range));
+});
+
+// Stats reset with confirmation
+$("#btn-stats-reset").addEventListener("click", () => {
+  $("#reset-confirm").hidden = false;
+});
+$("#btn-reset-no").addEventListener("click", () => {
+  $("#reset-confirm").hidden = true;
+});
+$("#btn-reset-yes").addEventListener("click", async () => {
+  await window.timerAPI.statsClear();
+  $("#reset-confirm").hidden = true;
+  await window.statsUI.refresh();
+});
+
 // Mode buttons
 $("#btn-work").addEventListener("click", () => startMode("work"));
 $("#btn-fun").addEventListener("click", () => startMode("fun"));
 $("#btn-stop").addEventListener("click", stopMode);
 
-// Dev mode: hold-to-speed button
+// Dev mode
 window.timerAPI.isDev().then((dev) => {
   if (!dev) return;
   const btn = $("#btn-speed");
@@ -22,7 +42,7 @@ window.timerAPI.isDev().then((dev) => {
   btn.addEventListener("mouseleave", () => window.timerAPI.setSpeed(1));
 });
 
-// Alert & break events from main process
+// IPC events
 window.timerAPI.onBeep(() => window.sounds.playBeep());
 window.timerAPI.onBreakStart(() => window.breakUI.showBreakPanel());
 window.timerAPI.onBreakOver(() => {

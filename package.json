@@ -3,11 +3,46 @@
   "version": "1.0.0",
   "description": "Lightweight work/fun activity timer",
   "main": "src/main.js",
+  "author": "DSK",
   "scripts": {
     "start": "electron .",
-    "dev": "electron . --dev"
+    "dev": "electron . --dev",
+    "icons": "node scripts/generate-icons.js",
+    "build": "npm run icons && set CSC_IDENTITY_AUTO_DISCOVERY=false && electron-builder --win"
+  },
+  "build": {
+    "appId": "com.dsk.timer",
+    "productName": "DSK Timer",
+    "icon": "assets/icon.ico",
+    "afterPack": "scripts/after-pack.js",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "DSK Timer",
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico"
+    },
+    "files": [
+      "src/**/*",
+      "assets/icon.ico",
+      "assets/icon.png"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "forceCodeSigning": false
   },
   "devDependencies": {
-    "electron": "^33.0.0"
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0",
+    "rcedit": "^4.0.1",
+    "sharp": "^0.33.5",
+    "to-ico": "^1.1.5"
   }
 }
