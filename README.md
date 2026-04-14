@@ -97,7 +97,7 @@ npm run dev
 
 ---
 
-## Build installer
+## Build installerss
 
 From the project folder, with Node.js installed:
 
