@@ -6,10 +6,10 @@ async function updateUI() {
   $("#timer-value").textContent = window.fmt.formatTime(st.elapsed);
   $("#stat-work").textContent = window.fmt.formatStat(st.totals.work + (st.mode === "work" ? st.elapsed : 0));
   $("#stat-fun").textContent = window.fmt.formatStat(st.totals.fun + (st.mode === "fun" ? st.elapsed : 0));
-  setActiveMode(st.mode, st.onBreak, st.paused);
+  setActiveMode(st.mode, st.onBreak, st.paused, st.breakRemaining ?? 0);
 }
 
-function setActiveMode(mode, onBreak, paused) {
+function setActiveMode(mode, onBreak, paused, breakRem) {
   if (mode) {
     document.body.className = `mode-${mode}`;
     $("#status-text").textContent = paused
@@ -22,18 +22,9 @@ function setActiveMode(mode, onBreak, paused) {
     $("#btn-stop").disabled = false;
     return;
   }
-  if (onBreak) {
-    document.body.className = "mode-break";
-    $("#status-text").textContent = "On break";
-    $("#btn-work").classList.remove("active");
-    $("#btn-fun").classList.remove("active");
-    $("#btn-work").disabled = false;
-    $("#btn-fun").disabled = false;
-    $("#btn-stop").disabled = true;
-    return;
-  }
-  document.body.className = "";
-  $("#status-text").textContent = "Idle";
+  const breakBlocking = onBreak && breakRem > 0;
+  document.body.className = breakBlocking ? "mode-break" : "";
+  $("#status-text").textContent = breakBlocking ? "On break" : (onBreak ? "Ready — tap Work" : "Idle");
   $("#btn-work").classList.remove("active");
   $("#btn-fun").classList.remove("active");
   $("#btn-work").disabled = false;

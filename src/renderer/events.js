@@ -90,7 +90,8 @@ window.timerAPI.onBeep(() => window.sounds.playBeep());
 window.timerAPI.onBreakStart(() => window.breakUI.showBreakPanel());
 window.timerAPI.onBreakOver(() => {
   window.sounds.playBeep();
-  $("#break-hint").textContent = "Break over — get back to work!";
+  if (!$("#break-panel").hidden) window.breakUI.hideBreakPanel();
+  updateUI();
 });
 window.timerAPI.onIdlePause(() => updateUI());
 window.timerAPI.onIdleResume(() => updateUI());

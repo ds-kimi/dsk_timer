@@ -35,6 +35,8 @@ async function startCountdown() {
       clearInterval(breakInterval);
       breakInterval = null;
       $("#break-hint").textContent = "Ready to work!";
+      hideBreakPanel();
+      if (window.updateUI) void window.updateUI();
     }
   }, 1000);
 }
